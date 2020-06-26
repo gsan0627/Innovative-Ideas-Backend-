@@ -1,24 +1,15 @@
-const BaseRepository = require("./base.repository");
+const BaseService = require("./base.service");
+let _commentRepository = null;
 let _ideaRepository = null;
 
-class IdeaRepository extends BaseRepository {
-  constructor({ IdeaRepository }) {
-    super(Idea);
+class CommentService extends BaseService {
+  constructor({ CommentRepository, IdeaRepository }) {
+    super(CommentRepository);
+    _commentRepository = CommentRepository;
     _ideaRepository = IdeaRepository;
   }
 
-  async getUserIdeas(author) {
-    if (!author) {
-      const error = new Error();
-      error.status = 400;
-      error.message = "userId must be sent";
-      throw error;
-    }
-
-    return await _idea.find({ author });
-  }
-
-  async upvoteIdea(ideaId) {
+  async getIdeaComments(ideaId) {
     if (!ideaId) {
       const error = new Error();
       error.status = 400;
@@ -27,6 +18,7 @@ class IdeaRepository extends BaseRepository {
     }
 
     const idea = await _ideaRepository.get(ideaId);
+
     if (!idea) {
       const error = new Error();
       error.status = 404;
@@ -34,12 +26,11 @@ class IdeaRepository extends BaseRepository {
       throw error;
     }
 
-    idea.upvotes.push(true);
-
-    return await _ideaRepository.update(ideaId, { upvotes: idea.upvotes });
+    const { comments } = idea;
+    return comments;
   }
 
-  async downvoteIdea(ideaId) {
+  async createComment(comment, ideaId) {
     if (!ideaId) {
       const error = new Error();
       error.status = 400;
@@ -48,6 +39,7 @@ class IdeaRepository extends BaseRepository {
     }
 
     const idea = await _ideaRepository.get(ideaId);
+
     if (!idea) {
       const error = new Error();
       error.status = 404;
@@ -55,10 +47,11 @@ class IdeaRepository extends BaseRepository {
       throw error;
     }
 
-    idea.downvotes.push(true);
+    const createdComment = await _commentRepository.create(comment);
+    idea.comments.push(createdComment);
 
-    return await _ideaRepository.update(ideaId, { downvotes: idea.downvotes });
+    return await _ideaRepository.update(ideaId, { comments: idea.comments });
   }
 }
 
-module.exports = IdeaRepository;
+module.exports = CommentService;

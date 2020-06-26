@@ -1,21 +1,14 @@
-const BaseRepository = require("./base.repository");
+const BaseService = require("./base.service");
 let _ideaRepository = null;
 
-class IdeaRepository extends BaseRepository {
+class IdeaService extends BaseService {
   constructor({ IdeaRepository }) {
-    super(Idea);
+    super(IdeaRepository);
     _ideaRepository = IdeaRepository;
   }
 
   async getUserIdeas(author) {
-    if (!author) {
-      const error = new Error();
-      error.status = 400;
-      error.message = "userId must be sent";
-      throw error;
-    }
-
-    return await _idea.find({ author });
+    return await _ideaRepository.getUserIdeas(author);
   }
 
   async upvoteIdea(ideaId) {
@@ -57,8 +50,8 @@ class IdeaRepository extends BaseRepository {
 
     idea.downvotes.push(true);
 
-    return await _ideaRepository.update(ideaId, { downvotes: idea.downvotes });
+    return await _ideaRepository.update(ideaId, { upvotes: idea.downvotes });
   }
 }
 
-module.exports = IdeaRepository;
+module.exports = IdeaService;
