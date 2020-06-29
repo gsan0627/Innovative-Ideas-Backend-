@@ -7,5 +7,5 @@ module.exports = {
   MONGO_URI: process.env.MONGO_URI,
   APPLICATION_NAME: process.env.APPLICATION_NAME,
   JWT_SECRET: process.env.JWT_SECRET,
-  CACHE_KEY = process.env.CACHE_KEY
+  CACHE_KEY: process.env.CACHE_KEY,
 };
