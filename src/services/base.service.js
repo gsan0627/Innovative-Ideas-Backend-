@@ -23,8 +23,8 @@ class BaseService {
     return currentEntity;
   }
 
-  async getAll() {
-    return await this._repository.getAll();
+  async getAll(pageSize, pageNum) {
+    return await this._repository.getAll(pageSize, pageNum);
   }
 
   async create(entity) {
