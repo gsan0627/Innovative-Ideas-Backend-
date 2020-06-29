@@ -1,10 +1,10 @@
 const BaseRepository = require("./base.repository");
-let _ideaRepository = null;
+let _idea = null;
 
 class IdeaRepository extends BaseRepository {
-  constructor({ IdeaRepository }) {
+  constructor({ Idea }) {
     super(Idea);
-    _ideaRepository = IdeaRepository;
+    _idea = Idea;
   }
 
   async getUserIdeas(author) {

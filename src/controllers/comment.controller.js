@@ -1,8 +1,8 @@
 let _commentSevice = null;
 
 class CommentController {
-  constructor({ UserService }) {
-    _commentSevice = commentService;
+  constructor({ CommentService }) {
+    _commentSevice = CommentService;
   }
 
   async get(req, res) {
