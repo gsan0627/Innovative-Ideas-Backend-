@@ -47,3 +47,5 @@ class AuthService {
     return { token, user: userExist };
   }
 }
+
+module.exports = AuthService;

@@ -17,3 +17,5 @@ class AuthController {
     return res.send(creds);
   }
 }
+
+module.exports = AuthController;
